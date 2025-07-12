@@ -95,7 +95,7 @@ exports.getUserOrders = async (req, res, next) => {
     
     // Build query
     let query = { userId: req.user.id };
-    
+    console.log("this is query>>>>>>>>>>>>>", query)
     // Filter by status
     if (status) {
       query.status = status;
@@ -119,7 +119,7 @@ exports.getUserOrders = async (req, res, next) => {
     const startIndex = (page - 1) * limit;
     
     const total = await Order.countDocuments(query);
-    const orders = await Order.find(query)
+    const orders = await Order.find({id:query})
       .sort(sortObj)
       .skip(startIndex)
       .limit(limit);
