@@ -71,6 +71,8 @@ app.use(
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
+
+app.get('/api/health', (req, res) => res.send('OK'));
 app.get("/", (req, res) => {
   res.json({ message: "API is running" });
 });
