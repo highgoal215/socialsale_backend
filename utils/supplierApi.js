@@ -31,12 +31,12 @@ class SupplierApi {
   
   async placeOrder(order) {
     try {
-      // For development purposes, we'll return a mock response
+      // Return empty response if no real API is configured
       if (process.env.NODE_ENV === 'development' && !this.apiUrl) {
         return {
           success: true,
-          orderId: `SUP-${Math.random().toString(36).substring(2, 12).toUpperCase()}`,
-          status: 'processing',
+          orderId: `SUP-${Date.now()}`,
+          status: 'pending',
           message: 'Order placed successfully'
         };
       }
@@ -50,8 +50,8 @@ class SupplierApi {
         username: order.socialUsername
       };
       
-      // Add URL for likes, views, and comments
-      if (order.serviceType !== 'followers' && order.postUrl) {
+      // Add URL for likes, views, and comments (not for followers/subscribers)
+      if (order.serviceType !== 'followers' && order.serviceType !== 'subscribers' && order.postUrl) {
         payload.link = order.postUrl;
       }
       
@@ -66,16 +66,13 @@ class SupplierApi {
   
   async checkOrderStatus(supplierOrderId) {
     try {
-      // For development purposes, we'll return a mock response
+      // Return empty response if no real API is configured
       if (process.env.NODE_ENV === 'development' && !this.apiUrl) {
-        const statuses = ['pending', 'processing', 'completed', 'cancelled'];
-        const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
-        
         return {
           orderId: supplierOrderId,
-          status: randomStatus,
+          status: 'pending',
           startCount: 0,
-          remains: Math.floor(Math.random() * 100)
+          remains: 0
         };
       }
       
@@ -93,17 +90,14 @@ class SupplierApi {
   
   async checkMultipleOrderStatus(supplierOrderIds) {
     try {
-      // For development purposes, we'll return a mock response
+      // Return empty response if no real API is configured
       if (process.env.NODE_ENV === 'development' && !this.apiUrl) {
         const result = {};
         
         for (const id of supplierOrderIds) {
-          const statuses = ['pending', 'processing', 'completed', 'cancelled'];
-          const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
-          
           result[id] = {
-            status: randomStatus,
-            remains: Math.floor(Math.random() * 100)
+            status: 'pending',
+            remains: 0
           };
         }
         
@@ -124,64 +118,9 @@ class SupplierApi {
   
   async getServices() {
     try {
-      // For development purposes, we'll return a mock response
+      // Return empty array if no real API is configured
       if (process.env.NODE_ENV === 'development' && !this.apiUrl) {
-        return [
-          {
-            id: 1,
-            name: 'Instagram Followers - Regular',
-            type: 'followers',
-            quality: 'regular',
-            rate: 1.5,
-            min: 100,
-            max: 10000
-          },
-          {
-            id: 2,
-            name: 'Instagram Followers - Premium',
-            type: 'followers',
-            quality: 'premium',
-            rate: 3.5,
-            min: 100,
-            max: 50000
-          },
-          {
-            id: 3,
-            name: 'Instagram Likes - Regular',
-            type: 'likes',
-            quality: 'regular',
-            rate: 0.8,
-            min: 50,
-            max: 5000
-          },
-          {
-            id: 4,
-            name: 'Instagram Likes - Premium',
-            type: 'likes',
-            quality: 'premium',
-            rate: 1.8,
-            min: 50,
-            max: 20000
-          },
-          {
-            id: 5,
-            name: 'Instagram Views',
-            type: 'views',
-            quality: 'regular',
-            rate: 0.2,
-            min: 100,
-            max: 100000
-          },
-          {
-            id: 6,
-            name: 'Instagram Comments - Regular',
-            type: 'comments',
-            quality: 'regular',
-            rate: 15,
-            min: 5,
-            max: 100
-          }
-        ];
+        return [];
       }
       
       const response = await axios.post(`${this.apiUrl}/services`, {
@@ -201,6 +140,10 @@ class SupplierApi {
     const serviceMap = {
       followers: {
         regular: 1,
+        premium: 2
+      },
+      subscribers: {
+        regular: 1, // Use same IDs as followers for now
         premium: 2
       },
       likes: {

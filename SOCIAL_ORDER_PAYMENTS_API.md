@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Social Order Payments API allows users to process payments for social media services (followers, likes, views, comments) using different payment methods including credit cards, PayPal, and cryptocurrencies.
+The Social Order Payments API allows users to process payments for social media services (followers, subscribers, likes, views, comments) using different payment methods including credit cards, PayPal, and cryptocurrencies.
 
 ## Base URL
 
@@ -25,9 +25,9 @@ Process a payment for social media services.
 | `socialUsername` | string | Yes | The social media username (Instagram, TikTok, etc.) |
 | `email` | string | Yes | Customer's email address |
 | `paymentMethod` | string | Yes | Payment method: `card`, `paypal`, or `crypto` |
-| `serviceType` | string | Yes | Service type: `followers`, `likes`, `views`, `comments` |
+| `serviceType` | string | Yes | Service type: `followers`, `subscribers`, `likes`, `views`, `comments` |
 | `quality` | string | Yes | Service quality: `general` or `premium` |
-| `quantity` | number | Yes | Number of followers/likes/views/comments |
+| `quantity` | number | Yes | Number of followers/subscribers/likes/views/comments |
 | `postUrl` | string | No | URL of the post (required for likes, views, comments) |
 
 #### Payment Method Specific Fields

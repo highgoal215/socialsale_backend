@@ -22,7 +22,7 @@ const httpServer = createServer(app);
 // Socket.IO setup
 const io = new Server(httpServer, {
   cors: {
-    origin: ["https://likes.io", "https://api.likes.io"],
+    origin: ["https://likes.io", "https://api.likes.io","http://localhost:9000", "http://localhost:4000"],
     methods: ["GET", "POST"]
   }
 });
@@ -61,8 +61,8 @@ app.use(helmet());
 
 app.use(
   cors({
-    origin: ["https://likes.io", "https://admin.likes.io", "http://localhost:9000",
-    "http://localhost:4000",],
+    origin: ["http://localhost:9000",
+    "http://localhost:4000"],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"]

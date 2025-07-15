@@ -166,28 +166,18 @@ class InstagramService {
         // Simulating API response delay for mock data
         await new Promise((resolve) => setTimeout(resolve, 300));
 
-        // More detailed mock data with consistent response based on username so that it can be used for testing
-        const usernameHash = this.hashCode(username);
-        const isVerified =
-          ["instagram", "cristiano", "leomessi", "beyonce", "nasa"].includes(
-            username.toLowerCase()
-          ) || usernameHash % 10 === 0;
-
+        // Return empty mock data
         return {
           username,
-          id: `user_${usernameHash}`,
+          id: `user_${this.hashCode(username)}`,
           fullName: this.capitalizeUsername(username),
           profilePicture: `https://ui-avatars.com/api/?name=${username}&background=random&size=200`,
-          isPrivate: usernameHash % 7 === 0, // Some accounts are private so yeah 
-          isVerified: isVerified,
-          followersCount: isVerified
-            ? 100000 + (usernameHash % 10000000)
-            : 100 + (usernameHash % 10000),
-          followingCount: 100 + (usernameHash % 1000),
-          postCount: 10 + (usernameHash % 200),
-          biography: `This is ${this.capitalizeUsername(username)}'s bio. ${
-            isVerified ? "Official account." : "Instagram enthusiast."
-          } #instagram #social`,
+          isPrivate: false,
+          isVerified: false,
+          followersCount: 0,
+          followingCount: 0,
+          postCount: 0,
+          biography: '',
         };
       } else {
         // In production, we would make an actual API call to Instagram or a third-party service
@@ -217,30 +207,17 @@ class InstagramService {
         // Simulating API response delay
         await new Promise((resolve) => setTimeout(resolve, 300));
 
-        // More detailed mock data with consistent response based on postId
-        const postHash = this.hashCode(postId);
-        const isPopularPost = postHash % 10 === 0;
-
+        // Return empty mock data
         return {
           id: postId,
           shortcode: postId,
-          caption: `${
-            isPopularPost
-              ? "Amazing sunset today! 🌅 #instagram #nofilter"
-              : "Just another day! #instagram"
-          } Post ID: ${postId}`,
-          imageUrl: `https://picsum.photos/seed/${postHash}/800/800`,
-          thumbnailUrl: `https://picsum.photos/seed/${postHash}/400/400`,
-          likesCount: isPopularPost
-            ? 10000 + (postHash % 50000)
-            : 50 + (postHash % 500),
-          commentsCount: isPopularPost
-            ? 500 + (postHash % 2000)
-            : 5 + (postHash % 50),
-          timestamp: new Date(
-            Date.now() - Math.abs(postHash % 2592000000)
-          ).toISOString(), // Within last 30 days
-          username: `user_${postHash % 1000}`, // Simulated username, would be real in production
+          caption: '',
+          imageUrl: '',
+          thumbnailUrl: '',
+          likesCount: 0,
+          commentsCount: 0,
+          timestamp: new Date().toISOString(),
+          username: '',
         };
       } else {
         // In production, you would make an actual API call to Instagram or a third-party service
@@ -391,22 +368,8 @@ class InstagramService {
       // In production, you would call a third-party API here
       // For development, we'll generate mock data
       
-      // Create mock posts
-      const posts = [];
-      for (let i = 0; i < limit; i++) {
-        const postId = `${username}_post_${i}`;
-        posts.push({
-          postId,
-          postUrl: `https://instagram.com/p/${postId}`,
-          imageUrl: `https://picsum.photos/seed/${username}${i}/500/500`,
-          caption: `Post ${i+1} by ${username}. #instagram #photo`,
-          likesCount: Math.floor(Math.random() * 1000),
-          commentsCount: Math.floor(Math.random() * 100),
-          timestamp: new Date(Date.now() - i * 86400000)
-        });
-      }
-      
-      return posts;
+      // Return empty posts array
+      return [];
     } catch (error) {
       throw new ErrorResponse(error.message || 'Error fetching Instagram posts', 400);
     }
