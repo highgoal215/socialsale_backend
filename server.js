@@ -22,7 +22,7 @@ const httpServer = createServer(app);
 // Socket.IO setup
 const io = new Server(httpServer, {
   cors: {
-    origin: "https://likes.io",
+    origin: ["https://likes.io", "https://api.likes.io"],
     methods: ["GET", "POST"]
   }
 });
