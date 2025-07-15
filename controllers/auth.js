@@ -48,23 +48,23 @@ exports.login = async (req, res, next) => {
     try {
      
       const { email, password } = req.body;
-      console.log(req.body);
-      console.log(`Login attempt with: ${email} / ${password}`);
+      // console.log(req.body);
+      // console.log(`Login attempt with: ${email} / ${password}`);
   
       if (!email || !password) {
         return next(new ErrorResponse('Please provide an email and password', 400));
       }
   
       const user = await User.findOne({ email }).select('+password');
-      console.log('User Data:', user);
+      // console.log('User Data:', user);
       
       if (user) {
         
         const passwordMatches = await bcrypt.compare(password, user.password);
-        console.log('Direct bcrypt comparison result:', passwordMatches);
+        // console.log('Direct bcrypt comparison result:', passwordMatches);
         
         const modelMethodResult = await user.matchPassword(password);
-        console.log('Model method comparison result:', modelMethodResult);
+        // console.log('Model method comparison result:', modelMethodResult);
       }
   
       if (!user) {
@@ -123,7 +123,7 @@ exports.updateUserProfile = async (req, res, next) => {
   try {
     const { username, id } = req.body;
 
-    console.log(username, id);
+    // console.log(username, id);
     
     // Check if username is being updated and if it's already taken
     if (username) {
@@ -169,7 +169,7 @@ exports.updatePassword = async (req, res, next) => {
   try {
     const { password, id } = req.body;
 
-    console.log(password, id);
+    // console.log(password, id);
     
     // Check if username is being updated and if it's already taken
     if (password) {
@@ -229,7 +229,7 @@ exports.logout = async (req, res, next) => {
 exports.googleLogin = async (req, res, next) => {
   try {
     const { token } = req.body;
-    console.log(token);
+    // console.log(token);
 
     if (!token) {
       return next(new ErrorResponse('Google token is required', 400));

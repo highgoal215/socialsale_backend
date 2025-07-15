@@ -56,7 +56,7 @@ const sendMessage = async (req, res) => {
     });
 
     const response = completion.choices[0].message.content;
-    console.log("------------------<>--------------", response)
+
     res.json({
       success: true,
       data: {

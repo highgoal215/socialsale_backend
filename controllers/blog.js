@@ -25,7 +25,7 @@ exports.getBlogPosts = async (req, res, next) => {
     }
 
     const posts = await BlogPost.find(query).sort({ createdAt: -1 });
-    console.log("Posts>>>>>>>>>>>>", posts)
+
     res.status(200).json({
       success: true,
       count: posts.length,
@@ -65,28 +65,28 @@ exports.getPublishedPosts = async (req, res, next) => {
 
 exports.getBlogPost = async (req, res, next) => {
   try {
-    console.log('getBlogPost called with params:', req.params);
-    console.log('getBlogPost called with id:', req.params.id);
+    // console.log('getBlogPost called with params:', req.params);
+    // console.log('getBlogPost called with id:', req.params.id);
 
     let post;
 
     // Allow finding by ID or slug
     if (mongoose.Types.ObjectId.isValid(req.params.id)) {
-      console.log('Searching by ObjectId:', req.params.id);
+      // console.log('Searching by ObjectId:', req.params.id);
       post = await BlogPost.findById(req.params.id);
     } else {
-      console.log('Searching by slug:', req.params.id);
+      // console.log('Searching by slug:', req.params.id);
       post = await BlogPost.findOne({ slug: req.params.id });
     }
 
-    console.log('Found post:', post);
+    // console.log('Found post:', post);
 
     if (!post) {
       console.log('Post not found, returning 404');
       return next(new ErrorResponse(`Blog post not found with id of ${req.params.id}`, 404));
     }
 
-    console.log("POSTById>>>>>>>>>>>>>", post);
+
     res.status(200).json({
       success: true,
       data: post
@@ -106,7 +106,7 @@ exports.createBlogPost = async (req, res, next) => {
       const fileInfo = getFileInfo(req.file);
       blogData.imageUrl = fileInfo.url;
     }
-    console.log(getFileInfo(req.file).url)
+    // console.log(getFileInfo(req.file).url)
 
     // For testing without database, return mock response
     if (!process.env.MONGO_URI) {

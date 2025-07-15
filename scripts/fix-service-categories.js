@@ -10,7 +10,7 @@ mongoose.connect(process.env.MONGO_URI, {
 
 const fixServiceCategories = async () => {
   try {
-    console.log('Starting to fix service categories...');
+    // console.log('Starting to fix service categories...');
     
     // Find all services that don't have a category field or have invalid category values
     const servicesWithoutCategory = await Service.find({
@@ -21,10 +21,10 @@ const fixServiceCategories = async () => {
       ]
     });
     
-    console.log(`Found ${servicesWithoutCategory.length} services without valid category`);
+    // console.log(`Found ${servicesWithoutCategory.length} services without valid category`);
     
     if (servicesWithoutCategory.length === 0) {
-      console.log('All services have valid categories. No fixes needed.');
+      // console.log('All services have valid categories. No fixes needed.');
       return;
     }
     
@@ -41,10 +41,10 @@ const fixServiceCategories = async () => {
       }
       
       await Service.findByIdAndUpdate(service._id, { category: defaultCategory });
-      console.log(`Fixed service ${service._id}: set category to ${defaultCategory}`);
+      // console.log(`Fixed service ${service._id}: set category to ${defaultCategory}`);
     }
     
-    console.log('Successfully fixed all service categories!');
+    // console.log('Successfully fixed all service categories!');
     
   } catch (error) {
     console.error('Error fixing service categories:', error);

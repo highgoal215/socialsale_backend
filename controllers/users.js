@@ -118,7 +118,7 @@ exports.updateUserProfile = async (req, res, next) => {
   try {
     // Don't allow updating role or status directly
     const { role, status, blockstate, balance, totalSpent, password, ...updateData } = req.body;
-    console.log(updateData);
+    // console.log(updateData);
     // Allow updating Instagram username and other safe fields
     const user = await User.findByIdAndUpdate(
       req.user.id,

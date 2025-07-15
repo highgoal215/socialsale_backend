@@ -6,10 +6,10 @@ const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 const verifyGoogleToken = async (token) => {
   try {
-    console.log('Verifying Google token...');
-    console.log('Google Client ID:', process.env.GOOGLE_CLIENT_ID);
-    console.log('Token length:', token ? token.length : 'undefined');
-    console.log('Token starts with:', token ? token.substring(0, 20) + '...' : 'undefined');
+    // console.log('Verifying Google token...');
+    // console.log('Google Client ID:', process.env.GOOGLE_CLIENT_ID);
+    // console.log('Token length:', token ? token.length : 'undefined');
+    // console.log('Token starts with:', token ? token.substring(0, 20) + '...' : 'undefined');
     
     // First, try to verify as an ID token
     try {
@@ -19,8 +19,8 @@ const verifyGoogleToken = async (token) => {
       });
       
       const payload = ticket.getPayload();
-      console.log('Google ID token verified successfully');
-      console.log('User email:', payload.email);
+      // console.log('Google ID token verified successfully');
+      // console.log('User email:', payload.email);
       
       return {
         googleId: payload.sub,
@@ -30,7 +30,7 @@ const verifyGoogleToken = async (token) => {
         emailVerified: payload.email_verified
       };
     } catch (idTokenError) {
-      console.log('ID token verification failed, trying as access token...');
+      // console.log('ID token verification failed, trying as access token...');
       
       // If ID token verification fails, try as access token
       try {
@@ -41,8 +41,8 @@ const verifyGoogleToken = async (token) => {
         });
         
         const userInfo = response.data;
-        console.log('Google access token verified successfully');
-        console.log('User email:', userInfo.email);
+        // console.log('Google access token verified successfully');
+        // console.log('User email:', userInfo.email);
         
         return {
           googleId: userInfo.id,
