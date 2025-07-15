@@ -8,7 +8,7 @@ const ServiceSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ['followers', 'likes', 'views', 'comments'],
+    enum: ['followers', 'subscribers', 'likes', 'views', 'comments'],
     required: [true, 'Please specify service type']
   },
   category: {

@@ -5,7 +5,7 @@ const PageContentSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please add a page ID'],
     unique: true,
-    enum: ['followers', 'likes', 'views', 'comments', 'home', 'about', 'faq', 'contact']
+    enum: ['followers', 'subscribers', 'likes', 'views', 'comments', 'home', 'about', 'faq', 'contact']
   },
   title: {
     type: String,

@@ -43,6 +43,12 @@ class SupplierService {
         '5678': { type: 'comments', quality: 'premium' }
       };
       
+      // Map subscribers to followers for supplier compatibility
+      const subscriberServiceMap = {
+        '2183': { type: 'subscribers', quality: 'general' },
+        '3305': { type: 'subscribers', quality: 'premium' }
+      };
+      
       const filteredServices = allServices.filter(service => specificServiceIds.includes(service.service));
       
       // Add type and quality information to each service

@@ -56,8 +56,8 @@ exports.processSocialOrderPayment = async (req, res, next) => {
       return next(new ErrorResponse('Service type, quality, and quantity are required', 400));
     }
 
-    if (!['followers', 'likes', 'views', 'comments'].includes(serviceType)) {
-      return next(new ErrorResponse('Invalid service type. Must be followers, likes, views, or comments', 400));
+    if (!['followers', 'subscribers', 'likes', 'views', 'comments'].includes(serviceType)) {
+      return next(new ErrorResponse('Invalid service type. Must be followers, subscribers, likes, views, or comments', 400));
     }
 
     if (!['general', 'premium'].includes(quality)) {

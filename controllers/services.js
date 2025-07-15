@@ -73,8 +73,8 @@ exports.createService = async (req, res, next) => {
     // Validate service type and quality
     const { type, quality, supplierServiceId, category } = req.body;
 
-    if (!['followers', 'likes', 'views', 'comments'].includes(type)) {
-      return next(new ErrorResponse('Invalid service type. Must be followers, likes, views, or comments', 400));
+    if (!['followers', 'subscribers', 'likes', 'views', 'comments'].includes(type)) {
+      return next(new ErrorResponse('Invalid service type. Must be followers, subscribers, likes, views, or comments', 400));
     }
 
     if (!['general', 'premium'].includes(quality)) {
@@ -88,6 +88,7 @@ exports.createService = async (req, res, next) => {
     // Validate supplier service ID - make it more flexible
     const validServiceIds = {
       followers: { general: '2183', premium: '3305' },
+      subscribers: { general: '2183', premium: '3305' }, // Use same IDs as followers for now
       likes: { general: '1782', premium: '1761' },
       views: { general: '8577', premium: '340' },
       comments: { general: '1234', premium: '5678' } // Add placeholder IDs for comments

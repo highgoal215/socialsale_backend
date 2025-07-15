@@ -26,13 +26,13 @@ const OrderSchema = new mongoose.Schema({
   postUrl: {
     type: String,
     required: function() {
-      // Only required for likes, views, and comments
+      // Only required for likes, views, and comments (not for followers/subscribers)
       return this.serviceType === 'likes' || this.serviceType === 'views' || this.serviceType === 'comments';
     }
   },
   serviceType: {
     type: String,
-    enum: ['followers', 'likes', 'views', 'comments'],
+    enum: ['followers', 'subscribers', 'likes', 'views', 'comments'],
     required: true
   },
   quality: {

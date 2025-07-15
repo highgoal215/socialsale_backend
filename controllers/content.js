@@ -71,7 +71,7 @@ exports.updatePageContent = async (req, res, next) => {
 exports.getServiceContent = async (req, res, next) => {
   try {
     const servicePages = await PageContent.find({
-      pageId: { $in: ['followers', 'likes', 'views', 'comments'] }
+              pageId: { $in: ['followers', 'subscribers', 'likes', 'views', 'comments'] }
     });
     
     res.status(200).json({
