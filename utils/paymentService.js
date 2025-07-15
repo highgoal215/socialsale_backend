@@ -29,10 +29,10 @@ class PaymentService {
       : 'https://api-m.sandbox.paypal.com';
     
     // Log available payment methods
-    console.log('Available payment methods:');
-    console.log('- Stripe:', this.stripeEnabled ? 'Enabled' : 'Disabled');
-    console.log('- PayPal:', this.paypalEnabled ? 'Enabled' : 'Disabled');
-    console.log('- Coinbase:', this.coinbaseEnabled ? 'Enabled' : 'Disabled');
+    // console.log('Available payment methods:');
+    // console.log('- Stripe:', this.stripeEnabled ? 'Enabled' : 'Disabled');
+    // console.log('- PayPal:', this.paypalEnabled ? 'Enabled' : 'Disabled');
+    // console.log('- Coinbase:', this.coinbaseEnabled ? 'Enabled' : 'Disabled');
   }
 
   // Get PayPal access token

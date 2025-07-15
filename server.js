@@ -29,22 +29,22 @@ const io = new Server(httpServer, {
 
 // Socket.IO connection handling
 io.on('connection', (socket) => {
-  console.log('User connected:', socket.id);
+  // console.log('User connected:', socket.id);
 
   // Join user to their personal room
   socket.on('join-user', (userId) => {
     socket.join(`user_${userId}`);
-    console.log(`User ${userId} joined their room`);
+    // console.log(`User ${userId} joined their room`);
   });
 
   // Join admin room
   socket.on('join-admin', () => {
     socket.join('admin');
-    console.log('Admin joined admin room');
+    // console.log('Admin joined admin room');
   });
 
   socket.on('disconnect', () => {
-    console.log('User disconnected:', socket.id);
+    // console.log('User disconnected:', socket.id);
   });
 });
 
@@ -61,8 +61,8 @@ app.use(helmet());
 
 app.use(
   cors({
-    origin: ["http://localhost:9000",
-    "http://localhost:4000"],
+    origin: ["https://likes.io","https://admin.likes.io", "http://localhost:9000", 
+    "http://localhost:4000" ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"]

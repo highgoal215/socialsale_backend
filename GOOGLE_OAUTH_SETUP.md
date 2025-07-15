@@ -92,7 +92,7 @@ function Login() {
     <GoogleLogin
       onSuccess={handleSuccess}
       onError={() => {
-        console.log('Login Failed');
+        // console.log('Login Failed');
       }}
     />
   );

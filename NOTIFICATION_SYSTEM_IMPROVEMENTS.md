@@ -44,7 +44,7 @@ const recentNotifications = await Notification.countDocuments({
 });
 
 if (recentNotifications >= 10) {
-  console.log(`Rate limit exceeded for user ${userId}`);
+  // console.log(`Rate limit exceeded for user ${userId}`);
   return null;
 }
 ```

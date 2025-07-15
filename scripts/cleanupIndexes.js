@@ -11,16 +11,16 @@ const cleanupIndexes = async () => {
       useUnifiedTopology: true
     });
 
-    console.log('Connected to MongoDB...');
+    // console.log('Connected to MongoDB...');
 
     // Get the database connection
     const db = mongoose.connection.db;
     
     // List current indexes
-    console.log('Current indexes on users collection:');
+    // console.log('Current indexes on users collection:');
     const indexes = await db.collection('users').indexes();
     indexes.forEach(index => {
-      console.log(`- ${index.name}: ${JSON.stringify(index.key)}`);
+      // console.log(`- ${index.name}: ${JSON.stringify(index.key)}`);
     });
 
     // Define the indexes that should exist based on current schema
@@ -35,21 +35,21 @@ const cleanupIndexes = async () => {
       if (!validIndexes.includes(index.name)) {
         try {
           await db.collection('users').dropIndex(index.name);
-          console.log(`Dropped index: ${index.name}`);
+          // console.log(`Dropped index: ${index.name}`);
         } catch (error) {
-          console.log(`Could not drop index ${index.name}: ${error.message}`);
+          // console.log(`Could not drop index ${index.name}: ${error.message}`);
         }
       }
     }
 
     // List remaining indexes to verify
-    console.log('\nRemaining indexes on users collection:');
+    // console.log('\nRemaining indexes on users collection:');
     const remainingIndexes = await db.collection('users').indexes();
     remainingIndexes.forEach(index => {
-      console.log(`- ${index.name}: ${JSON.stringify(index.key)}`);
+      // console.log(`- ${index.name}: ${JSON.stringify(index.key)}`);
     });
 
-    console.log('\nIndex cleanup completed successfully!');
+    // console.log('\nIndex cleanup completed successfully!');
     process.exit(0);
   } catch (error) {
     console.error('Error during index cleanup:', error.message);

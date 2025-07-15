@@ -8,7 +8,6 @@ const ErrorResponse = require('../utils/errorResponse');
 exports.getServices = async (req, res, next) => {
   try {
     const { type, quality, popular, active, category } = req.query;
-    console.log("what are the query params", req.query);
     let query = {};
 
     if (type) {
@@ -84,7 +83,6 @@ exports.createService = async (req, res, next) => {
     if (!['Instagram', 'TikTok', 'YouTube'].includes(category)) {
       return next(new ErrorResponse('Invalid category. Must be Instagram, TikTok, or YouTube', 400));
     }
-    console.log("req.body>>>>>>>>>>>>>", req.body)
     // Validate supplier service ID - make it more flexible
     const validServiceIds = {
       followers: { general: '2183', premium: '3305' },

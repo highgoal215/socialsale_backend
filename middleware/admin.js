@@ -3,10 +3,10 @@
 exports.admin = (req, res, next) => {
   console.log('Admin middleware - user role:', req.user.role);
   if (req.user.role !== 'admin') {
-    console.log('User is not admin, returning 403');
+    // console.log('User is not admin, returning 403');
     return next(new ErrorResponse('Not authorized to access this route. Admin access required.', 403));
   }
-  console.log('Admin middleware - user is admin, proceeding');
+  // console.log('Admin middleware - user is admin, proceeding');
   next();
 };
 

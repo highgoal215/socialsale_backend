@@ -11,7 +11,7 @@ const dropFirstnameIndex = async () => {
       useUnifiedTopology: true
     });
 
-    console.log('Connected to MongoDB...');
+    // console.log('Connected to MongoDB...');
 
     // Get the database connection
     const db = mongoose.connection.db;
@@ -19,13 +19,13 @@ const dropFirstnameIndex = async () => {
     // Drop the firstname index from users collection
     await db.collection('users').dropIndex('firstname_1');
     
-    console.log('Successfully dropped firstname_1 index from users collection');
+    // console.log('Successfully dropped firstname_1 index from users collection');
     
     // List remaining indexes to verify
     const indexes = await db.collection('users').indexes();
-    console.log('Remaining indexes on users collection:');
+    // console.log('Remaining indexes on users collection:');
     indexes.forEach(index => {
-      console.log(`- ${index.name}: ${JSON.stringify(index.key)}`);
+      // console.log(`- ${index.name}: ${JSON.stringify(index.key)}`);
     });
 
     process.exit(0);

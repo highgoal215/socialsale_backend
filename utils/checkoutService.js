@@ -11,13 +11,13 @@ class CheckoutService {
     this.secretKey = process.env.CHECKOUT_SECRET_KEY;
     this.processingChannelId = process.env.CHECKOUT_CLIENT_ID; // This is actually a processing channel ID
 
-    console.log("Checkout.com configuration:", {
-      environment: process.env.NODE_ENV || "development",
-      baseUrl: this.baseUrl,
-      hasPublicKey: !!this.publicKey,
-      hasSecretKey: !!this.secretKey,
-      hasProcessingChannelId: !!this.processingChannelId,
-    });
+    // console.log("Checkout.com configuration:", {
+    //   environment: process.env.NODE_ENV || "development",
+    //   baseUrl: this.baseUrl,
+    //   hasPublicKey: !!this.publicKey,
+    //   hasSecretKey: !!this.secretKey,
+    //   hasProcessingChannelId: !!this.processingChannelId,
+    // });
   }
 
   /**
@@ -27,12 +27,12 @@ class CheckoutService {
    */
   async createPayment(paymentData) {
     try {
-      console.log("Creating direct payment with data:", {
-        url: `${this.baseUrl}/payments`,
-        requestHasAuth: !!this.secretKey,
-        amountProvided: !!paymentData.amount,
-        currencyProvided: !!paymentData.currency,
-      });
+      // console.log("Creating direct payment with data:", {
+      //   url: `${this.baseUrl}/payments`,
+      //   requestHasAuth: !!this.secretKey,
+      //   amountProvided: !!paymentData.amount,
+      //   currencyProvided: !!paymentData.currency,
+      // });
 
       const response = await axios.post(
         `${this.baseUrl}/payments`,
@@ -69,12 +69,12 @@ class CheckoutService {
   async createHostedPayment(paymentData) {
     try {
       // Add detailed logging to help troubleshoot
-      console.log("Creating hosted payment with data:", {
-        url: `${this.baseUrl}/hosted-payments`,
-        requestHasAuth: !!this.secretKey,
-        amountProvided: !!paymentData.amount,
-        currencyProvided: !!paymentData.currency,
-      });
+      // console.log("Creating hosted payment with data:", {
+      //   url: `${this.baseUrl}/hosted-payments`,
+      //   requestHasAuth: !!this.secretKey,
+      //   amountProvided: !!paymentData.amount,
+      //   currencyProvided: !!paymentData.currency,
+      // });
 
       // Checkout.com expects the Authorization header in the format: 'Bearer sk_xxx'
       const response = await axios.post(

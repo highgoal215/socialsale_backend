@@ -191,7 +191,7 @@ exports.createNotification = async (userId, type, title, message, options = {}) 
         if (preferenceField) {
           const typeEnabled = preferences[preferenceField];
           if (typeEnabled === false) {
-            console.log(`Notification blocked for user ${userId}: ${type} notifications disabled`);
+            // console.log(`Notification blocked for user ${userId}: ${type} notifications disabled`);
             return null; // Don't create notification
           }
         }
@@ -214,13 +214,13 @@ exports.createNotification = async (userId, type, title, message, options = {}) 
           if (startTime > endTime) {
             // Quiet hours span midnight (e.g., 22:00 to 08:00)
             if (currentTime >= startTime || currentTime <= endTime) {
-              console.log(`Notification blocked for user ${userId}: quiet hours active`);
+              // console.log(`Notification blocked for user ${userId}: quiet hours active`);
               return null;
             }
           } else {
             // Quiet hours within same day
             if (currentTime >= startTime && currentTime <= endTime) {
-              console.log(`Notification blocked for user ${userId}: quiet hours active`);
+              // console.log(`Notification blocked for user ${userId}: quiet hours active`);
               return null;
             }
           }
@@ -236,7 +236,7 @@ exports.createNotification = async (userId, type, title, message, options = {}) 
     });
 
     if (recentNotifications >= 10) {
-      console.log(`Rate limit exceeded for user ${userId}: too many notifications in the last hour`);
+      // console.log(`Rate limit exceeded for user ${userId}: too many notifications in the last hour`);
       return null;
     }
     
@@ -254,18 +254,18 @@ exports.createNotification = async (userId, type, title, message, options = {}) 
     if (global.io) {
       try {
         const unreadCount = await Notification.countDocuments({ userId, read: false });
-        console.log(`📡 Emitting notification to user_${userId}:`, {
-          notificationId: notification._id,
-          title: notification.title,
-          unreadCount
-        });
+        // console.log(`📡 Emitting notification to user_${userId}:`, {
+        //   notificationId: notification._id,
+        //   title: notification.title,
+        //   unreadCount
+        // });
         
         global.io.to(`user_${userId}`).emit('new_notification', {
           notification,
           unreadCount
         });
         
-        console.log(`✅ Notification emitted successfully to user_${userId}`);
+        // console.log(`✅ Notification emitted successfully to user_${userId}`);
       } catch (error) {
         console.error('❌ Error emitting notification:', error);
       }
@@ -328,7 +328,7 @@ exports.testNotification = async (req, res, next) => {
       return next(new ErrorResponse(`User not found with id of ${userId}`, 404));
     }
 
-    console.log(`🧪 Creating test notification for user ${userId}:`, { type, title, message });
+    // console.log(`🧪 Creating test notification for user ${userId}:`, { type, title, message });
 
     // Create test notification
     const notification = await exports.createNotification(
@@ -340,7 +340,7 @@ exports.testNotification = async (req, res, next) => {
     );
 
     if (!notification) {
-      console.log(`❌ Test notification blocked for user ${userId}`);
+      // console.log(`❌ Test notification blocked for user ${userId}`);
       return res.status(200).json({
         success: false,
         message: 'Notification was not created (blocked by preferences or rate limits)',
@@ -352,7 +352,7 @@ exports.testNotification = async (req, res, next) => {
       });
     }
     
-    console.log(`✅ Test notification created successfully for user ${userId}:`, notification._id);
+    // console.log(`✅ Test notification created successfully for user ${userId}:`, notification._id);
     
     res.status(201).json({
       success: true,

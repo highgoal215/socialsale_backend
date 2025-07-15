@@ -3,8 +3,8 @@ const User = require("../models/User");
 const ErrorResponse = require("../utils/errorResponse");
 
 exports.protect = async (req, res, next) => {
-  console.log('Auth middleware - headers:', req.headers);
-  console.log('Auth middleware - authorization:', req.headers.authorization);
+  // console.log('Auth middleware - headers:', req.headers);
+  // console.log('Auth middleware - authorization:', req.headers.authorization);
   
   let token;
 
@@ -13,22 +13,22 @@ exports.protect = async (req, res, next) => {
     req.headers.authorization.startsWith("Bearer")
   ) {
     token = req.headers.authorization.split(" ")[1];
-    console.log("TOKEN", token);
+    // console.log("TOKEN", token);
   } else if (req.cookies && req.cookies.token) {
     token = req.cookies.token;
   }
 
   if (!token) {
-    console.log('No token found, returning 401');
+    // console.log('No token found, returning 401');/
     return next(new ErrorResponse("Not authorized to access this route", 401));
   }
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log('Token decoded:', decoded);
+    // console.log('Token decoded:', decoded);
 
     const user = await User.findById(decoded.id).select("-password");
-    console.log('User found:', user);
+    // console.log('User found:', user);
 
     if (!user) {
       return next(new ErrorResponse("User no longer exists", 401));
@@ -51,7 +51,7 @@ exports.protect = async (req, res, next) => {
 
     req.user = user;
     res.locals.user = user;
-    console.log('Auth middleware - user authenticated:', user.role);
+    // console.log('Auth middleware - user authenticated:', user.role);
     next();
   } catch (err) {
     console.error('Auth middleware error:', err);
