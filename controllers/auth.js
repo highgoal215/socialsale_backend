@@ -6,6 +6,7 @@ const { verifyGoogleToken } = require('../config/google');
 // @desc    Register user
 // @route   POST /api/auth/register
 // @access  Public
+
 exports.register = async (req, res, next) => {
   try {
     const { username, email, password } = req.body;
