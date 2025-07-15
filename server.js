@@ -61,7 +61,8 @@ app.use(helmet());
 
 app.use(
   cors({
-    origin: ["https://likes.io", "http://likeio.duckdns.org:9000", "http://likeio.duckdns.org:3000", "http://likeio.duckdns.org:5173"],
+    origin: ["https://likes.io", "https://admin.likes.io", "http://localhost:9000",
+    "http://localhost:4000",],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"]
@@ -71,6 +72,9 @@ app.use(
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
+
+
+app.get('/api/health', (req, res) => res.send('OK'));
 app.get("/", (req, res) => {
   res.json({ message: "API is running" });
 });
