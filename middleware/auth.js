@@ -40,7 +40,8 @@ exports.protect = async (req, res, next) => {
       );
     }
 
-    if (decoded.iat < parseInt(user.passwordChangedAt / 1000)) {
+    // Check if password was changed after token was issued
+    if (user.passwordChangedAt && decoded.iat < parseInt(user.passwordChangedAt / 1000)) {
       return next(
         new ErrorResponse(
           "User recently changed password. Please login again",

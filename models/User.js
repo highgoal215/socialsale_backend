@@ -27,6 +27,10 @@ const UserSchema = new mongoose.Schema({
     minlength: 6,
     select: false
   },
+  passwordChangedAt: {
+    type: Date,
+    default: Date.now
+  },
   // Google OAuth fields
   googleId: {
     type: String,
@@ -106,6 +110,9 @@ UserSchema.pre('save', async function(next) {
 
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
+  
+  // Update passwordChangedAt when password is modified
+  this.passwordChangedAt = Date.now() - 1000; // Subtract 1 second to ensure token was issued before password change
 });
 
 UserSchema.methods.getSignedJwtToken = function() {
