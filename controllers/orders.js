@@ -119,7 +119,7 @@ exports.getUserOrders = async (req, res, next) => {
     const startIndex = (page - 1) * limit;
     
     const total = await Order.countDocuments(query);
-    const orders = await Order.find({id:query})
+    const orders = await Order.find(query)
       .sort(sortObj)
       .skip(startIndex)
       .limit(limit);

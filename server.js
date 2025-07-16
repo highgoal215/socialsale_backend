@@ -22,7 +22,7 @@ const httpServer = createServer(app);
 // Socket.IO setup
 const io = new Server(httpServer, {
   cors: {
-    origin: ["https://likes.io", "https://api.likes.io","http://localhost:9000", "http://localhost:4000"],
+    origin: ["https://likes.io", "http://localhost:9000", "http://localhost:4000"],
     methods: ["GET", "POST"]
   }
 });
@@ -54,7 +54,6 @@ global.io = io;
 // JSON parsing middleware
 app.use(express.json({ limit: '10mb' }));
 
-app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use(helmet());

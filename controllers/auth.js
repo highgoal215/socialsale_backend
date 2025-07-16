@@ -171,14 +171,6 @@ exports.updatePassword = async (req, res, next) => {
 
     // console.log(password, id);
     
-    // Check if username is being updated and if it's already taken
-    if (password) {
-      const existingUser = await User.findOne({ password, _id: { $ne: id } });
-      if (existingUser) {
-        return next(new ErrorResponse('Username is already taken', 400));
-      }
-    }
-
     // Find the user first
     let user = await User.findById(id);
     
@@ -186,7 +178,7 @@ exports.updatePassword = async (req, res, next) => {
       return next(new ErrorResponse('User not found', 404));
     }
 
-    // Update username and password if provided
+    // Update password if provided
     if (password) user.password = password;
 
     // Save the user (this will trigger password hashing if password was changed)
@@ -194,14 +186,14 @@ exports.updatePassword = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      username: {
+      user: {
         id: user._id,
         username: user.username,
         email: user.email,
         role: user.role,
         balance: user.balance
       },
-      message: 'Profile updated successfully'
+      message: 'Password updated successfully'
     });
   } catch (err) {
     next(err);
