@@ -315,11 +315,16 @@ exports.deleteCategory = async (req, res, next) => {
 };
 
 exports.getPostCount = async (req, res, next) => {
-  const category = await BlogCategory.findById(req.params.id);
-  if (!category) return next(new ErrorResponse(`Category not found with id of ${req.params.id}`, 404));
+  try {
+    const category = await BlogCategory.findById(req.params.id);
+    if (!category) {
+      return next(new ErrorResponse(`Category not found with id of ${req.params.id}`, 404));
+    }
 
-  const blog = await BlogPost.find({ categoryId: category.name });
-
-  if (!blog || blog.length == 0) return next(new ErrorResponse(`BlogPost not found`, 404));
-  res.status(200).json({ count: blog.length });
+    const blogPosts = await BlogPost.find({ categoryId: category._id });
+    
+    res.status(200).json({ count: blogPosts.length });
+  } catch (err) {
+    next(err);
+  }
 }

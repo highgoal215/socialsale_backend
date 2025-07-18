@@ -27,9 +27,8 @@ router.post('/checkout-session', createCheckoutSession);
 router.post('/process-payment', processPayment);
 
 // Admin routes
-router.use(admin).route('/');
-router.get('/', getTransactions);
-router.get('/:id', getTransaction);
-router.post('/refund', refundPayment);
+router.get('/', admin, getTransactions);
+router.get('/:id', admin, getTransaction);
+router.post('/refund', admin, refundPayment);
 
 module.exports = router;

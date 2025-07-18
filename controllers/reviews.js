@@ -2,6 +2,105 @@
 const Review = require('../models/Review');
 const ErrorResponse = require('../utils/errorResponse');
 const { createNotification } = require('./notifications');
+
+// Get all reviews
+exports.getReviews = async (req, res, next) => {
+  try {
+    const reviews = await Review.find().populate('userId', 'name email');
+    res.status(200).json({
+      success: true,
+      count: reviews.length,
+      data: reviews
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Get single review
+exports.getReview = async (req, res, next) => {
+  try {
+    const review = await Review.findById(req.params.id).populate('userId', 'name email');
+    
+    if (!review) {
+      return next(new ErrorResponse(`Review not found with id of ${req.params.id}`, 404));
+    }
+    
+    res.status(200).json({
+      success: true,
+      data: review
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Get featured reviews
+exports.getFeaturedReviews = async (req, res, next) => {
+  try {
+    const reviews = await Review.find({ featured: true, verified: true }).populate('userId', 'name email');
+    res.status(200).json({
+      success: true,
+      count: reviews.length,
+      data: reviews
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Update review
+exports.updateReview = async (req, res, next) => {
+  try {
+    let review = await Review.findById(req.params.id);
+    
+    if (!review) {
+      return next(new ErrorResponse(`Review not found with id of ${req.params.id}`, 404));
+    }
+    
+    // Make sure user owns review or is admin
+    if (review.userId.toString() !== req.user.id && req.user.role !== 'admin') {
+      return next(new ErrorResponse(`User ${req.user.id} is not authorized to update this review`, 401));
+    }
+    
+    review = await Review.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true
+    });
+    
+    res.status(200).json({
+      success: true,
+      data: review
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Delete review
+exports.deleteReview = async (req, res, next) => {
+  try {
+    const review = await Review.findById(req.params.id);
+    
+    if (!review) {
+      return next(new ErrorResponse(`Review not found with id of ${req.params.id}`, 404));
+    }
+    
+    // Make sure user owns review or is admin
+    if (review.userId.toString() !== req.user.id && req.user.role !== 'admin') {
+      return next(new ErrorResponse(`User ${req.user.id} is not authorized to delete this review`, 401));
+    }
+    
+    await review.deleteOne();
+    
+    res.status(200).json({
+      success: true,
+      data: {}
+    });
+  } catch (err) {
+    next(err);
+  }
+};
 exports.createReview = async (req, res, next) => {
   try {
     // If user is not admin, set verified to false

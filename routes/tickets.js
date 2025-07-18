@@ -28,10 +28,10 @@ router.put('/:id/close', closeTicket);
 router.post('/attachment', upload.single('file'), uploadAttachment);
 
 // Admin routes
-router.use('/admin', admin);
+router.use(admin);
 
-router.get('/', admin, getTickets);
-router.put('/:id/status', admin, updateTicketStatus);
-router.put('/:id/priority', admin, updateTicketPriority);
+router.get('/', getTickets);
+router.put('/:id/status', updateTicketStatus);
+router.put('/:id/priority', updateTicketPriority);
 
 module.exports = router;
