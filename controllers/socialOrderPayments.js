@@ -10,6 +10,8 @@ const checkoutService = require('../utils/checkoutService');
 // @access  Public
 exports.processSocialOrderPayment = async (req, res, next) => {
   try {
+console.log('Processing social order payment:', req.body)    // Validate required fields
+
     const {
       socialUsername,
       email,
@@ -27,8 +29,6 @@ exports.processSocialOrderPayment = async (req, res, next) => {
       quantity,
       postUrl
     } = req.body;
-
-    // Validate required fields
     if (!socialUsername || !email || !paymentMethod) {
       return next(new ErrorResponse('Social username, email, and payment method are required', 400));
     }
@@ -76,7 +76,7 @@ exports.processSocialOrderPayment = async (req, res, next) => {
         isGuest: true
       });
     }
-
+    console.log('serviceType>>>>>>>', serviceType, 'quality>>>>>>', quality, 'quantity>>>>>>', quantity);
     // Find the service
     const service = await Service.findOne({
       type: serviceType,

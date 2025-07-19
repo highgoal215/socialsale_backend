@@ -24,7 +24,7 @@ const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
     origin: ["https://likes.io", "https://www.likes.io", "http://localhost:9000", "http://localhost:4000", "http://localhost:5173", "http://localhost:3000"],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"]
   },
@@ -95,7 +95,7 @@ app.use(
   cors({
     origin: ["https://likes.io", "https://www.likes.io", "https://admin.likes.io", "http://localhost:9000", "http://localhost:4000", "http://localhost:5173", "http://localhost:3000", "http://localhost:5174"],
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
     exposedHeaders: ["Content-Disposition"]
   })
